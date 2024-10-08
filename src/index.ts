@@ -78,11 +78,15 @@ export class PrivateS3Hosting extends Construct {
     listener.addTargets('Target', {
       port: 443,
       targets: vpcEndpoint.vpcEndpointPrivateIps.map((ip) => new targets.IpTarget(ip)),
+      healthCheck: {
+        healthyHttpCodes: '307,405',
+      },
     });
 
     if (props?.enablePrivateDns) {
-      const hostedzone = new route53.HostedZone(this, 'HostedZone', {
+      const hostedzone = new route53.PrivateHostedZone(this, 'HostedZone', {
         zoneName: props.domainName,
+        vpc: this.vpc,
       });
       new route53.ARecord(this, 'AliasRecord', {
         zone: hostedzone,
