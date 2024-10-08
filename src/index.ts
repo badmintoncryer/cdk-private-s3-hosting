@@ -44,7 +44,7 @@ export interface PrivateS3HostingProps {
    *
    * @default - use default properties
    */
-  readonly bucketProps?: s3.BucketProps;
+  readonly bucketProps: s3.BucketProps;
 
   /**
    * Whether the ALB is internet facing
@@ -84,7 +84,7 @@ export class PrivateS3Hosting extends Construct {
   constructor(scope: Construct, id: string, props: PrivateS3HostingProps) {
     super(scope, id);
 
-    this.vpc = props?.vpc ?? new ec2.Vpc(this, 'Vpc', {
+    this.vpc = props.vpc ?? new ec2.Vpc(this, 'Vpc', {
       maxAzs: 2,
       natGateways: 0,
     });
@@ -98,8 +98,8 @@ export class PrivateS3Hosting extends Construct {
     });
 
     this.bucket = new s3.Bucket(this, 'Bucket', {
-      ...props?.bucketProps,
-      bucketName: props?.domainName,
+      ...props.bucketProps,
+      bucketName: props.domainName,
     });
     this.bucket.addToResourcePolicy(new iam.PolicyStatement({
       actions: ['s3:GetObject'],
@@ -114,10 +114,10 @@ export class PrivateS3Hosting extends Construct {
 
     this.alb = new elbv2.ApplicationLoadBalancer(this, 'Alb', {
       vpc: this.vpc,
-      internetFacing: props?.internetFacing ?? false,
+      internetFacing: props.internetFacing ?? false,
     });
 
-    const isTls = !!props?.certificate;
+    const isTls = !!props.certificate;
     const listener = this.alb.addListener('Listener', {
       port: isTls ? 443 : 80,
       protocol: isTls ? elbv2.ApplicationProtocol.HTTPS : elbv2.ApplicationProtocol.HTTP,
@@ -142,7 +142,7 @@ export class PrivateS3Hosting extends Construct {
       },
     });
 
-    if (props?.enablePrivateDns ?? true) {
+    if (props.enablePrivateDns ?? true) {
       const hostedzone = new route53.PrivateHostedZone(this, 'HostedZone', {
         zoneName: props.domainName,
         vpc: this.vpc,
