@@ -46,6 +46,8 @@ For example, if you put the `hoge.txt` file in the S3 bucket, you can access it 
 curl http://cryer-nao-domain.com/hoge.txt
 ```
 
+
+
 ### Deploy the frontend assets
 
 You can deploy the frontend assets to the S3 bucket like below:

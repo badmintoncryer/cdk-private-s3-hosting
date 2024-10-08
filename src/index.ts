@@ -16,9 +16,28 @@ export interface PrivateS3HostingProps {
   /**
    * The domain name for the website
    *
-   * This will be used to create the S3 bucket and the ALB listener
+   * S3 bucket name will be created with `domainName`.
+   *
+   * If `enablePrivateDns` is enabled,
+   * a private hosted zone also will be created for the `domainName`
+   * and an A record has been created from `domainName` to the ALB DNS name.".
+   *
+   * If `subDomein` is provided, these names will be `${subDomain}.${domainName}`.
    */
   readonly domainName: string;
+
+  /**
+   * The sub domain for the website
+   *
+   * S3 bucket name will be created with `${subDomain}.{domainName}`.
+   *
+   * If `enablePrivateDns` is enabled,
+   * a private hosted zone also will be created for the `domainName`
+   * and an A record has been created from `${subDomain}.${domainName}` to the ALB DNS name.".
+   *
+   * @default - no sub domain
+   */
+  readonly subDomain?: string;
 
   /**
    * The certificate for the website
@@ -81,6 +100,11 @@ export class PrivateS3Hosting extends Construct {
    */
   public readonly vpc: ec2.IVpc;
 
+  /**
+   * The hosted zone for the website
+   */
+  public readonly hostedZone?: route53.IHostedZone;
+
   constructor(scope: Construct, id: string, props: PrivateS3HostingProps) {
     super(scope, id);
 
@@ -97,9 +121,11 @@ export class PrivateS3Hosting extends Construct {
       vpc: this.vpc,
     });
 
+    const bucketName = props.subDomain ? `${props.subDomain}.${props.domainName}` : props.domainName;
+
     this.bucket = new s3.Bucket(this, 'Bucket', {
       ...props.bucketProps,
-      bucketName: props.domainName,
+      bucketName,
     });
     this.bucket.addToResourcePolicy(new iam.PolicyStatement({
       actions: ['s3:GetObject'],
@@ -143,13 +169,14 @@ export class PrivateS3Hosting extends Construct {
     });
 
     if (props.enablePrivateDns ?? true) {
-      const hostedzone = new route53.PrivateHostedZone(this, 'HostedZone', {
+      this.hostedZone = new route53.PrivateHostedZone(this, 'HostedZone', {
         zoneName: props.domainName,
         vpc: this.vpc,
       });
       new route53.ARecord(this, 'AliasRecord', {
-        zone: hostedzone,
+        zone: this.hostedZone,
         target: route53.RecordTarget.fromAlias(new route53Targets.LoadBalancerTarget(this.alb)),
+        recordName: props.subDomain,
       });
     };
   }
