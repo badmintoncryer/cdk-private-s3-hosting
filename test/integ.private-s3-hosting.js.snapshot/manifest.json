@@ -1,0 +1,401 @@
+{
+  "version": "36.0.0",
+  "artifacts": {
+    "IntegTestStack.assets": {
+      "type": "cdk:asset-manifest",
+      "properties": {
+        "file": "IntegTestStack.assets.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+      }
+    },
+    "IntegTestStack": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://unknown-account/unknown-region",
+      "properties": {
+        "templateFile": "IntegTestStack.template.json",
+        "terminationProtection": false,
+        "validateOnSynth": false,
+        "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-deploy-role-${AWS::AccountId}-${AWS::Region}",
+        "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-cfn-exec-role-${AWS::AccountId}-${AWS::Region}",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/c7a3b0e6f2771dd24ca43b331a60da27503a25f4f1b6dd82cf472f277db0deab.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
+        "additionalDependencies": [
+          "IntegTestStack.assets"
+        ],
+        "lookupRole": {
+          "arn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-lookup-role-${AWS::AccountId}-${AWS::Region}",
+          "requiresBootstrapStackVersion": 8,
+          "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+        }
+      },
+      "dependencies": [
+        "IntegTestStack.assets"
+      ],
+      "metadata": {
+        "/IntegTestStack/PrivateS3Hosting/Vpc/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PrivateS3HostingVpcEED45DD1"
+          }
+        ],
+        "/IntegTestStack/PrivateS3Hosting/Vpc/PublicSubnet1/Subnet": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PrivateS3HostingVpcPublicSubnet1Subnet53C39CEA"
+          }
+        ],
+        "/IntegTestStack/PrivateS3Hosting/Vpc/PublicSubnet1/RouteTable": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PrivateS3HostingVpcPublicSubnet1RouteTable619E9F12"
+          }
+        ],
+        "/IntegTestStack/PrivateS3Hosting/Vpc/PublicSubnet1/RouteTableAssociation": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PrivateS3HostingVpcPublicSubnet1RouteTableAssociationB1F69A86"
+          }
+        ],
+        "/IntegTestStack/PrivateS3Hosting/Vpc/PublicSubnet1/DefaultRoute": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PrivateS3HostingVpcPublicSubnet1DefaultRouteB9E816F1"
+          }
+        ],
+        "/IntegTestStack/PrivateS3Hosting/Vpc/PublicSubnet2/Subnet": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PrivateS3HostingVpcPublicSubnet2SubnetC2DC3512"
+          }
+        ],
+        "/IntegTestStack/PrivateS3Hosting/Vpc/PublicSubnet2/RouteTable": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PrivateS3HostingVpcPublicSubnet2RouteTable90B2BCFC"
+          }
+        ],
+        "/IntegTestStack/PrivateS3Hosting/Vpc/PublicSubnet2/RouteTableAssociation": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PrivateS3HostingVpcPublicSubnet2RouteTableAssociation7A078134"
+          }
+        ],
+        "/IntegTestStack/PrivateS3Hosting/Vpc/PublicSubnet2/DefaultRoute": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PrivateS3HostingVpcPublicSubnet2DefaultRoute76024F2F"
+          }
+        ],
+        "/IntegTestStack/PrivateS3Hosting/Vpc/IsolatedSubnet1/Subnet": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PrivateS3HostingVpcIsolatedSubnet1SubnetD14D2371"
+          }
+        ],
+        "/IntegTestStack/PrivateS3Hosting/Vpc/IsolatedSubnet1/RouteTable": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PrivateS3HostingVpcIsolatedSubnet1RouteTable604BF647"
+          }
+        ],
+        "/IntegTestStack/PrivateS3Hosting/Vpc/IsolatedSubnet1/RouteTableAssociation": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PrivateS3HostingVpcIsolatedSubnet1RouteTableAssociation0DE3AF38"
+          }
+        ],
+        "/IntegTestStack/PrivateS3Hosting/Vpc/IsolatedSubnet2/Subnet": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PrivateS3HostingVpcIsolatedSubnet2SubnetB9E0D9A2"
+          }
+        ],
+        "/IntegTestStack/PrivateS3Hosting/Vpc/IsolatedSubnet2/RouteTable": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PrivateS3HostingVpcIsolatedSubnet2RouteTable8B17BF4E"
+          }
+        ],
+        "/IntegTestStack/PrivateS3Hosting/Vpc/IsolatedSubnet2/RouteTableAssociation": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PrivateS3HostingVpcIsolatedSubnet2RouteTableAssociation806D153B"
+          }
+        ],
+        "/IntegTestStack/PrivateS3Hosting/Vpc/IGW": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PrivateS3HostingVpcIGW06DB07E8"
+          }
+        ],
+        "/IntegTestStack/PrivateS3Hosting/Vpc/VPCGW": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PrivateS3HostingVpcVPCGW5A598D28"
+          }
+        ],
+        "/IntegTestStack/PrivateS3Hosting/Vpc/RestrictDefaultSecurityGroupCustomResource/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PrivateS3HostingVpcRestrictDefaultSecurityGroupCustomResourceE52C51DC"
+          }
+        ],
+        "/IntegTestStack/PrivateS3Hosting/Vpc/S3GatewayEndpoint/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PrivateS3HostingVpcS3GatewayEndpointD90D9E82"
+          }
+        ],
+        "/IntegTestStack/PrivateS3Hosting/S3InterfaceEndpoint/SecurityGroup/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PrivateS3HostingS3InterfaceEndpointSecurityGroupBE96DDAD"
+          }
+        ],
+        "/IntegTestStack/PrivateS3Hosting/S3InterfaceEndpoint/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PrivateS3HostingS3InterfaceEndpoint0A39FF9C"
+          }
+        ],
+        "/IntegTestStack/PrivateS3Hosting/S3InterfaceEndpoint/GetEndpointIp0": [
+          {
+            "type": "aws:cdk:warning",
+            "data": "installLatestAwsSdk was not specified, and defaults to true. You probably do not want this. Set the global context flag '@aws-cdk/customresources:installLatestAwsSdkDefault' to false to switch this behavior off project-wide, or set the property explicitly to true if you know you need to call APIs that are not in Lambda's built-in SDK version. [ack: @aws-cdk/custom-resources:installLatestAwsSdkNotSpecified]"
+          }
+        ],
+        "/IntegTestStack/PrivateS3Hosting/S3InterfaceEndpoint/GetEndpointIp0/Resource/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PrivateS3HostingS3InterfaceEndpointGetEndpointIp00619AB5F"
+          }
+        ],
+        "/IntegTestStack/PrivateS3Hosting/S3InterfaceEndpoint/GetEndpointIp0/CustomResourcePolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PrivateS3HostingS3InterfaceEndpointGetEndpointIp0CustomResourcePolicy3D2F5595"
+          }
+        ],
+        "/IntegTestStack/PrivateS3Hosting/S3InterfaceEndpoint/GetEndpointIp1": [
+          {
+            "type": "aws:cdk:warning",
+            "data": "installLatestAwsSdk was not specified, and defaults to true. You probably do not want this. Set the global context flag '@aws-cdk/customresources:installLatestAwsSdkDefault' to false to switch this behavior off project-wide, or set the property explicitly to true if you know you need to call APIs that are not in Lambda's built-in SDK version. [ack: @aws-cdk/custom-resources:installLatestAwsSdkNotSpecified]"
+          }
+        ],
+        "/IntegTestStack/PrivateS3Hosting/S3InterfaceEndpoint/GetEndpointIp1/Resource/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PrivateS3HostingS3InterfaceEndpointGetEndpointIp185C6C791"
+          }
+        ],
+        "/IntegTestStack/PrivateS3Hosting/S3InterfaceEndpoint/GetEndpointIp1/CustomResourcePolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PrivateS3HostingS3InterfaceEndpointGetEndpointIp1CustomResourcePolicy8FA4D692"
+          }
+        ],
+        "/IntegTestStack/PrivateS3Hosting/Bucket/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PrivateS3HostingBucket30B1B338"
+          }
+        ],
+        "/IntegTestStack/PrivateS3Hosting/Bucket/Policy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PrivateS3HostingBucketPolicy65E317FE"
+          }
+        ],
+        "/IntegTestStack/PrivateS3Hosting/Bucket/AutoDeleteObjectsCustomResource/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PrivateS3HostingBucketAutoDeleteObjectsCustomResource7897F342"
+          }
+        ],
+        "/IntegTestStack/PrivateS3Hosting/Alb/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PrivateS3HostingAlb021A4BED"
+          }
+        ],
+        "/IntegTestStack/PrivateS3Hosting/Alb/SecurityGroup/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PrivateS3HostingAlbSecurityGroup2A2D63AD"
+          }
+        ],
+        "/IntegTestStack/PrivateS3Hosting/Alb/SecurityGroup/from IntegTestStackCloudShellSg53A03676:80": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PrivateS3HostingAlbSecurityGroupfromIntegTestStackCloudShellSg53A0367680F062C9FD"
+          }
+        ],
+        "/IntegTestStack/PrivateS3Hosting/Alb/Listener/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PrivateS3HostingAlbListenerA1E8A46E"
+          }
+        ],
+        "/IntegTestStack/PrivateS3Hosting/Alb/Listener/RedirectRule/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PrivateS3HostingAlbListenerRedirectRuleF008D581"
+          }
+        ],
+        "/IntegTestStack/PrivateS3Hosting/Alb/Listener/TargetGroup/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PrivateS3HostingAlbListenerTargetGroup38693E12"
+          }
+        ],
+        "/IntegTestStack/PrivateS3Hosting/HostedZone/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PrivateS3HostingHostedZone3CFF459C"
+          }
+        ],
+        "/IntegTestStack/PrivateS3Hosting/AliasRecord/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PrivateS3HostingAliasRecord8AC38807"
+          }
+        ],
+        "/IntegTestStack/Custom::VpcRestrictDefaultSGCustomResourceProvider/Role": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CustomVpcRestrictDefaultSGCustomResourceProviderRole26592FE0"
+          }
+        ],
+        "/IntegTestStack/Custom::VpcRestrictDefaultSGCustomResourceProvider/Handler": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CustomVpcRestrictDefaultSGCustomResourceProviderHandlerDC833E5E"
+          }
+        ],
+        "/IntegTestStack/AWS679f53fac002430cb0da5b7982bd2287/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AWS679f53fac002430cb0da5b7982bd2287ServiceRoleC1EA0FF2"
+          }
+        ],
+        "/IntegTestStack/AWS679f53fac002430cb0da5b7982bd2287/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AWS679f53fac002430cb0da5b7982bd22872D164C4C"
+          }
+        ],
+        "/IntegTestStack/Custom::S3AutoDeleteObjectsCustomResourceProvider/Role": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092"
+          }
+        ],
+        "/IntegTestStack/Custom::S3AutoDeleteObjectsCustomResourceProvider/Handler": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CustomS3AutoDeleteObjectsCustomResourceProviderHandler9D90184F"
+          }
+        ],
+        "/IntegTestStack/CloudShellSg": [
+          {
+            "type": "aws:cdk:warning",
+            "data": "Ignoring Egress rule since 'allowAllOutbound' is set to true; To add customized rules, set allowAllOutbound=false on the SecurityGroup [ack: @aws-cdk/aws-ec2:ipv4IgnoreEgressRule]"
+          }
+        ],
+        "/IntegTestStack/CloudShellSg/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CloudShellSg676A0AA8"
+          }
+        ],
+        "/IntegTestStack/AWSCDKCfnUtilsProviderCustomResourceProvider/Role": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AWSCDKCfnUtilsProviderCustomResourceProviderRoleFE0EE867"
+          }
+        ],
+        "/IntegTestStack/AWSCDKCfnUtilsProviderCustomResourceProvider/Handler": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AWSCDKCfnUtilsProviderCustomResourceProviderHandlerCF82AA57"
+          }
+        ],
+        "/IntegTestStack/CdkJsonStringify1/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CdkJsonStringify1"
+          }
+        ],
+        "/IntegTestStack/BootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BootstrapVersion"
+          }
+        ],
+        "/IntegTestStack/CheckBootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CheckBootstrapVersion"
+          }
+        ]
+      },
+      "displayName": "IntegTestStack"
+    },
+    "IntegTestDefaultTestDeployAssertE3E7D2A4.assets": {
+      "type": "cdk:asset-manifest",
+      "properties": {
+        "file": "IntegTestDefaultTestDeployAssertE3E7D2A4.assets.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+      }
+    },
+    "IntegTestDefaultTestDeployAssertE3E7D2A4": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://unknown-account/unknown-region",
+      "properties": {
+        "templateFile": "IntegTestDefaultTestDeployAssertE3E7D2A4.template.json",
+        "terminationProtection": false,
+        "validateOnSynth": false,
+        "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-deploy-role-${AWS::AccountId}-${AWS::Region}",
+        "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-cfn-exec-role-${AWS::AccountId}-${AWS::Region}",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/21fbb51d7b23f6a6c262b46a9caee79d744a3ac019fd45422d988b96d44b2a22.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
+        "additionalDependencies": [
+          "IntegTestDefaultTestDeployAssertE3E7D2A4.assets"
+        ],
+        "lookupRole": {
+          "arn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-lookup-role-${AWS::AccountId}-${AWS::Region}",
+          "requiresBootstrapStackVersion": 8,
+          "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+        }
+      },
+      "dependencies": [
+        "IntegTestDefaultTestDeployAssertE3E7D2A4.assets"
+      ],
+      "metadata": {
+        "/IntegTest/DefaultTest/DeployAssert/BootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BootstrapVersion"
+          }
+        ],
+        "/IntegTest/DefaultTest/DeployAssert/CheckBootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CheckBootstrapVersion"
+          }
+        ]
+      },
+      "displayName": "IntegTest/DefaultTest/DeployAssert"
+    },
+    "Tree": {
+      "type": "cdk:tree",
+      "properties": {
+        "file": "tree.json"
+      }
+    }
+  }
+}
