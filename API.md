@@ -90,6 +90,7 @@ Any object.
 | <code><a href="#cdk-private-s3-hosting.PrivateS3Hosting.property.alb">alb</a></code> | <code>aws-cdk-lib.aws_elasticloadbalancingv2.ApplicationLoadBalancer</code> | The ALB to access the website. |
 | <code><a href="#cdk-private-s3-hosting.PrivateS3Hosting.property.bucket">bucket</a></code> | <code>aws-cdk-lib.aws_s3.Bucket</code> | The S3 bucket for hosting the website. |
 | <code><a href="#cdk-private-s3-hosting.PrivateS3Hosting.property.vpc">vpc</a></code> | <code>aws-cdk-lib.aws_ec2.IVpc</code> | The VPC. |
+| <code><a href="#cdk-private-s3-hosting.PrivateS3Hosting.property.hostedZone">hostedZone</a></code> | <code>aws-cdk-lib.aws_route53.IHostedZone</code> | The hosted zone for the website. |
 
 ---
 
@@ -141,6 +142,18 @@ The VPC.
 
 ---
 
+##### `hostedZone`<sup>Optional</sup> <a name="hostedZone" id="cdk-private-s3-hosting.PrivateS3Hosting.property.hostedZone"></a>
+
+```typescript
+public readonly hostedZone: IHostedZone;
+```
+
+- *Type:* aws-cdk-lib.aws_route53.IHostedZone
+
+The hosted zone for the website.
+
+---
+
 
 ## Structs <a name="Structs" id="Structs"></a>
 
@@ -165,6 +178,7 @@ const privateS3HostingProps: PrivateS3HostingProps = { ... }
 | <code><a href="#cdk-private-s3-hosting.PrivateS3HostingProps.property.certificate">certificate</a></code> | <code>aws-cdk-lib.aws_certificatemanager.ICertificate</code> | The certificate for the website. |
 | <code><a href="#cdk-private-s3-hosting.PrivateS3HostingProps.property.enablePrivateDns">enablePrivateDns</a></code> | <code>boolean</code> | Enable private DNS for the website. |
 | <code><a href="#cdk-private-s3-hosting.PrivateS3HostingProps.property.internetFacing">internetFacing</a></code> | <code>boolean</code> | Whether the ALB is internet facing. |
+| <code><a href="#cdk-private-s3-hosting.PrivateS3HostingProps.property.subDomain">subDomain</a></code> | <code>string</code> | The sub domain for the website. |
 | <code><a href="#cdk-private-s3-hosting.PrivateS3HostingProps.property.vpc">vpc</a></code> | <code>aws-cdk-lib.aws_ec2.IVpc</code> | The VPC for the website. |
 
 ---
@@ -192,7 +206,13 @@ public readonly domainName: string;
 
 The domain name for the website.
 
-This will be used to create the S3 bucket and the ALB listener
+S3 bucket name will be created with `domainName`.
+
+If `enablePrivateDns` is enabled,
+a private hosted zone also will be created for the `domainName`
+and an A record has been created from `domainName` to the ALB DNS name.".
+
+If `subDomein` is provided, these names will be `${subDomain}.${domainName}`.
 
 ---
 
@@ -237,6 +257,25 @@ public readonly internetFacing: boolean;
 - *Default:* false
 
 Whether the ALB is internet facing.
+
+---
+
+##### `subDomain`<sup>Optional</sup> <a name="subDomain" id="cdk-private-s3-hosting.PrivateS3HostingProps.property.subDomain"></a>
+
+```typescript
+public readonly subDomain: string;
+```
+
+- *Type:* string
+- *Default:* no sub domain
+
+The sub domain for the website.
+
+S3 bucket name will be created with `${subDomain}.{domainName}`.
+
+If `enablePrivateDns` is enabled,
+a private hosted zone also will be created for the `domainName`
+and an A record has been created from `${subDomain}.${domainName}` to the ALB DNS name.".
 
 ---
 
