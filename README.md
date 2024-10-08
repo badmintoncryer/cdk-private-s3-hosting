@@ -46,8 +46,6 @@ For example, if you put the `hoge.txt` file in the S3 bucket, you can access it 
 curl http://cryer-nao-domain.com/hoge.txt
 ```
 
-
-
 ### Deploy the frontend assets
 
 You can deploy the frontend assets to the S3 bucket like below:
@@ -70,7 +68,21 @@ new s3deploy.BucketDeployment(this, 'DeployWebsite', {
 After deploying the stack, you can access the website using the `domainName` you specified from the VPC.
 
 ```sh
-curl http://cryer-nao-domain.com
+[cloudshell-user@ip-10-0-31-170 ~]$ curl http://cryer-nao-domain.com/ -L
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite + React + TS</title>
+    <script type="module" crossorigin src="/assets/index-f40OySzR.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-DiwrgTda.css">
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>
 ```
 
 **Note**: All access to the path pattern `*/` will be redirected to `/index.html`. Therefore, it will function correctly even when the path is set on the frontend and the page is reloaded.

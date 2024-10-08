@@ -649,6 +649,35 @@
                           "fqn": "aws-cdk-lib.aws_ec2.CfnSecurityGroup",
                           "version": "2.130.0"
                         }
+                      },
+                      "from IntegTestStackPrivateS3HostingAlbSecurityGroup5BF4E43C:443": {
+                        "id": "from IntegTestStackPrivateS3HostingAlbSecurityGroup5BF4E43C:443",
+                        "path": "IntegTestStack/PrivateS3Hosting/S3InterfaceEndpoint/SecurityGroup/from IntegTestStackPrivateS3HostingAlbSecurityGroup5BF4E43C:443",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::EC2::SecurityGroupIngress",
+                          "aws:cdk:cloudformation:props": {
+                            "description": "from IntegTestStackPrivateS3HostingAlbSecurityGroup5BF4E43C:443",
+                            "fromPort": 443,
+                            "groupId": {
+                              "Fn::GetAtt": [
+                                "PrivateS3HostingS3InterfaceEndpointSecurityGroupBE96DDAD",
+                                "GroupId"
+                              ]
+                            },
+                            "ipProtocol": "tcp",
+                            "sourceSecurityGroupId": {
+                              "Fn::GetAtt": [
+                                "PrivateS3HostingAlbSecurityGroup2A2D63AD",
+                                "GroupId"
+                              ]
+                            },
+                            "toPort": 443
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_ec2.CfnSecurityGroupIngress",
+                          "version": "2.130.0"
+                        }
                       }
                     },
                     "constructInfo": {
@@ -1064,15 +1093,6 @@
                           "aws:cdk:cloudformation:type": "AWS::EC2::SecurityGroup",
                           "aws:cdk:cloudformation:props": {
                             "groupDescription": "Automatically created Security Group for ELB IntegTestStackPrivateS3HostingAlb996293FE",
-                            "securityGroupEgress": [
-                              {
-                                "cidrIp": "255.255.255.255/32",
-                                "description": "Disallow all traffic",
-                                "ipProtocol": "icmp",
-                                "fromPort": 252,
-                                "toPort": 86
-                              }
-                            ],
                             "securityGroupIngress": [
                               {
                                 "cidrIp": "0.0.0.0/0",
@@ -1089,6 +1109,35 @@
                         },
                         "constructInfo": {
                           "fqn": "aws-cdk-lib.aws_ec2.CfnSecurityGroup",
+                          "version": "2.130.0"
+                        }
+                      },
+                      "to IntegTestStackPrivateS3HostingS3InterfaceEndpointSecurityGroup623E4E67:443": {
+                        "id": "to IntegTestStackPrivateS3HostingS3InterfaceEndpointSecurityGroup623E4E67:443",
+                        "path": "IntegTestStack/PrivateS3Hosting/Alb/SecurityGroup/to IntegTestStackPrivateS3HostingS3InterfaceEndpointSecurityGroup623E4E67:443",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::EC2::SecurityGroupEgress",
+                          "aws:cdk:cloudformation:props": {
+                            "description": "to IntegTestStackPrivateS3HostingS3InterfaceEndpointSecurityGroup623E4E67:443",
+                            "destinationSecurityGroupId": {
+                              "Fn::GetAtt": [
+                                "PrivateS3HostingS3InterfaceEndpointSecurityGroupBE96DDAD",
+                                "GroupId"
+                              ]
+                            },
+                            "fromPort": 443,
+                            "groupId": {
+                              "Fn::GetAtt": [
+                                "PrivateS3HostingAlbSecurityGroup2A2D63AD",
+                                "GroupId"
+                              ]
+                            },
+                            "ipProtocol": "tcp",
+                            "toPort": 443
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_ec2.CfnSecurityGroupEgress",
                           "version": "2.130.0"
                         }
                       },

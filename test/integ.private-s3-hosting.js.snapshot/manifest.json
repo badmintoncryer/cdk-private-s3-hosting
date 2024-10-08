@@ -18,7 +18,7 @@
         "validateOnSynth": false,
         "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-deploy-role-${AWS::AccountId}-${AWS::Region}",
         "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-cfn-exec-role-${AWS::AccountId}-${AWS::Region}",
-        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/c7a3b0e6f2771dd24ca43b331a60da27503a25f4f1b6dd82cf472f277db0deab.json",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/6afd45304d71e9e17e6524f6faa70db2f9a09fb9f43d3bab61e248d93cf144d8.json",
         "requiresBootstrapStackVersion": 6,
         "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
         "additionalDependencies": [
@@ -154,6 +154,12 @@
             "data": "PrivateS3HostingS3InterfaceEndpointSecurityGroupBE96DDAD"
           }
         ],
+        "/IntegTestStack/PrivateS3Hosting/S3InterfaceEndpoint/SecurityGroup/from IntegTestStackPrivateS3HostingAlbSecurityGroup5BF4E43C:443": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PrivateS3HostingS3InterfaceEndpointSecurityGroupfromIntegTestStackPrivateS3HostingAlbSecurityGroup5BF4E43C443C5C1E3E3"
+          }
+        ],
         "/IntegTestStack/PrivateS3Hosting/S3InterfaceEndpoint/Resource": [
           {
             "type": "aws:cdk:logicalId",
@@ -224,6 +230,12 @@
           {
             "type": "aws:cdk:logicalId",
             "data": "PrivateS3HostingAlbSecurityGroup2A2D63AD"
+          }
+        ],
+        "/IntegTestStack/PrivateS3Hosting/Alb/SecurityGroup/to IntegTestStackPrivateS3HostingS3InterfaceEndpointSecurityGroup623E4E67:443": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PrivateS3HostingAlbSecurityGrouptoIntegTestStackPrivateS3HostingS3InterfaceEndpointSecurityGroup623E4E67443A77C4220"
           }
         ],
         "/IntegTestStack/PrivateS3Hosting/Alb/SecurityGroup/from IntegTestStackCloudShellSg53A03676:80": [

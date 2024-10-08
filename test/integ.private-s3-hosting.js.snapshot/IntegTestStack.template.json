@@ -396,6 +396,27 @@
     }
    }
   },
+  "PrivateS3HostingS3InterfaceEndpointSecurityGroupfromIntegTestStackPrivateS3HostingAlbSecurityGroup5BF4E43C443C5C1E3E3": {
+   "Type": "AWS::EC2::SecurityGroupIngress",
+   "Properties": {
+    "Description": "from IntegTestStackPrivateS3HostingAlbSecurityGroup5BF4E43C:443",
+    "FromPort": 443,
+    "GroupId": {
+     "Fn::GetAtt": [
+      "PrivateS3HostingS3InterfaceEndpointSecurityGroupBE96DDAD",
+      "GroupId"
+     ]
+    },
+    "IpProtocol": "tcp",
+    "SourceSecurityGroupId": {
+     "Fn::GetAtt": [
+      "PrivateS3HostingAlbSecurityGroup2A2D63AD",
+      "GroupId"
+     ]
+    },
+    "ToPort": 443
+   }
+  },
   "PrivateS3HostingS3InterfaceEndpoint0A39FF9C": {
    "Type": "AWS::EC2::VPCEndpoint",
    "Properties": {
@@ -740,15 +761,6 @@
    "Type": "AWS::EC2::SecurityGroup",
    "Properties": {
     "GroupDescription": "Automatically created Security Group for ELB IntegTestStackPrivateS3HostingAlb996293FE",
-    "SecurityGroupEgress": [
-     {
-      "CidrIp": "255.255.255.255/32",
-      "Description": "Disallow all traffic",
-      "FromPort": 252,
-      "IpProtocol": "icmp",
-      "ToPort": 86
-     }
-    ],
     "SecurityGroupIngress": [
      {
       "CidrIp": "0.0.0.0/0",
@@ -761,6 +773,27 @@
     "VpcId": {
      "Ref": "PrivateS3HostingVpcEED45DD1"
     }
+   }
+  },
+  "PrivateS3HostingAlbSecurityGrouptoIntegTestStackPrivateS3HostingS3InterfaceEndpointSecurityGroup623E4E67443A77C4220": {
+   "Type": "AWS::EC2::SecurityGroupEgress",
+   "Properties": {
+    "Description": "to IntegTestStackPrivateS3HostingS3InterfaceEndpointSecurityGroup623E4E67:443",
+    "DestinationSecurityGroupId": {
+     "Fn::GetAtt": [
+      "PrivateS3HostingS3InterfaceEndpointSecurityGroupBE96DDAD",
+      "GroupId"
+     ]
+    },
+    "FromPort": 443,
+    "GroupId": {
+     "Fn::GetAtt": [
+      "PrivateS3HostingAlbSecurityGroup2A2D63AD",
+      "GroupId"
+     ]
+    },
+    "IpProtocol": "tcp",
+    "ToPort": 443
    }
   },
   "PrivateS3HostingAlbSecurityGroupfromIntegTestStackCloudShellSg53A0367680F062C9FD": {

@@ -168,6 +168,8 @@ export class PrivateS3Hosting extends Construct {
       },
     });
 
+    this.alb.connections.allowTo(vpcEndpoint, ec2.Port.tcp(443));
+
     if (props.enablePrivateDns ?? true) {
       this.hostedZone = new route53.PrivateHostedZone(this, 'HostedZone', {
         zoneName: props.domainName,
