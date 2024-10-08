@@ -28,19 +28,22 @@ export class PrivateS3Hosting extends Construct {
       maxAzs: 2,
       natGateways: 0,
     });
+    this.vpc.addGatewayEndpoint('S3GatewayEndpoint', {
+      service: ec2.GatewayVpcEndpointAwsService.S3,
+    });
 
-    const vpcEndpoint = new InterfaceVpcEndpointWithPrivateIp(this, 'S3Endpoint', {
+    const vpcEndpoint = new InterfaceVpcEndpointWithPrivateIp(this, 'S3InterfaceEndpoint', {
       service: ec2.InterfaceVpcEndpointAwsService.S3,
       vpc: this.vpc,
     });
 
-    const bucket = new s3.Bucket(this, 'Bucket', {
+    this.bucket = new s3.Bucket(this, 'Bucket', {
       ...props?.bucketProps,
       bucketName: props?.domainName,
     });
-    bucket.addToResourcePolicy(new iam.PolicyStatement({
+    this.bucket.addToResourcePolicy(new iam.PolicyStatement({
       actions: ['s3:GetObject'],
-      resources: [bucket.bucketArn, bucket.arnForObjects('*')],
+      resources: [this.bucket.bucketArn, this.bucket.arnForObjects('*')],
       principals: [new iam.AnyPrincipal()],
       conditions: {
         StringEquals: {
@@ -49,13 +52,13 @@ export class PrivateS3Hosting extends Construct {
       },
     }));
 
-    const alb = new elbv2.ApplicationLoadBalancer(this, 'Alb', {
+    this.alb = new elbv2.ApplicationLoadBalancer(this, 'Alb', {
       vpc: this.vpc,
       internetFacing: props?.internetFacing ?? false,
     });
 
     const isTls = !!props?.certificate;
-    const listener = alb.addListener('Listener', {
+    const listener = this.alb.addListener('Listener', {
       port: isTls ? 443 : 80,
       protocol: isTls ? elbv2.ApplicationProtocol.HTTPS : elbv2.ApplicationProtocol.HTTP,
       certificates: isTls ? [props!.certificate!] : undefined,
@@ -73,7 +76,7 @@ export class PrivateS3Hosting extends Construct {
       new route53.CnameRecord(this, 'CnameRecord', {
         zone: hostedzone,
         recordName: props.domainName,
-        domainName: alb.loadBalancerDnsName,
+        domainName: this.alb.loadBalancerDnsName,
       });
     };
   }
