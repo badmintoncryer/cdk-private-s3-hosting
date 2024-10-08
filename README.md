@@ -8,7 +8,7 @@ Original idea is from [this blog post](https://aws.amazon.com/jp/blogs/networkin
 
 ## Architecture
 
-
+![Architecture](./images/private_s3_hosting.png)
 
 ## Usage
 
