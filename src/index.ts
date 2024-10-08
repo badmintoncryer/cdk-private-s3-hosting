@@ -4,6 +4,7 @@ import * as elbv2 from 'aws-cdk-lib/aws-elasticloadbalancingv2';
 import * as targets from 'aws-cdk-lib/aws-elasticloadbalancingv2-targets';
 import * as iam from 'aws-cdk-lib/aws-iam';
 import * as route53 from 'aws-cdk-lib/aws-route53';
+import * as route53Targets from 'aws-cdk-lib/aws-route53-targets';
 import * as s3 from 'aws-cdk-lib/aws-s3';
 import { Construct } from 'constructs';
 import { InterfaceVpcEndpointWithPrivateIp } from './constructs/interface-vpc-endpoint-with-private-ip';
@@ -63,7 +64,17 @@ export class PrivateS3Hosting extends Construct {
       protocol: isTls ? elbv2.ApplicationProtocol.HTTPS : elbv2.ApplicationProtocol.HTTP,
       certificates: isTls ? [props!.certificate!] : undefined,
     });
-
+    listener.addAction('Redirect', {
+      priority: 1,
+      action: elbv2.ListenerAction.redirect({
+        protocol: isTls ? elbv2.ApplicationProtocol.HTTPS : elbv2.ApplicationProtocol.HTTP,
+        port: isTls ? '443' : '80',
+        path: '/#{path}index.html',
+      }),
+      conditions: [
+        elbv2.ListenerCondition.pathPatterns(['*/']),
+      ],
+    });
     listener.addTargets('Target', {
       port: 443,
       targets: vpcEndpoint.vpcEndpointPrivateIps.map((ip) => new targets.IpTarget(ip)),
@@ -73,10 +84,9 @@ export class PrivateS3Hosting extends Construct {
       const hostedzone = new route53.HostedZone(this, 'HostedZone', {
         zoneName: props.domainName,
       });
-      new route53.CnameRecord(this, 'CnameRecord', {
+      new route53.ARecord(this, 'AliasRecord', {
         zone: hostedzone,
-        recordName: props.domainName,
-        domainName: this.alb.loadBalancerDnsName,
+        target: route53.RecordTarget.fromAlias(new route53Targets.LoadBalancerTarget(this.alb)),
       });
     };
   }

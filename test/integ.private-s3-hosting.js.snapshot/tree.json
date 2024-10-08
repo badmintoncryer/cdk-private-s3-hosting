@@ -1157,6 +1157,54 @@
                           "version": "2.130.0"
                         }
                       },
+                      "RedirectRule": {
+                        "id": "RedirectRule",
+                        "path": "IntegStack/PrivateS3Hosting/Alb/Listener/RedirectRule",
+                        "children": {
+                          "Resource": {
+                            "id": "Resource",
+                            "path": "IntegStack/PrivateS3Hosting/Alb/Listener/RedirectRule/Resource",
+                            "attributes": {
+                              "aws:cdk:cloudformation:type": "AWS::ElasticLoadBalancingV2::ListenerRule",
+                              "aws:cdk:cloudformation:props": {
+                                "actions": [
+                                  {
+                                    "type": "redirect",
+                                    "redirectConfig": {
+                                      "statusCode": "HTTP_302",
+                                      "path": "/#{path}index.html",
+                                      "port": "80",
+                                      "protocol": "HTTP"
+                                    }
+                                  }
+                                ],
+                                "conditions": [
+                                  {
+                                    "field": "path-pattern",
+                                    "pathPatternConfig": {
+                                      "values": [
+                                        "*/"
+                                      ]
+                                    }
+                                  }
+                                ],
+                                "listenerArn": {
+                                  "Ref": "PrivateS3HostingAlbListenerA1E8A46E"
+                                },
+                                "priority": 1
+                              }
+                            },
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.aws_elasticloadbalancingv2.CfnListenerRule",
+                              "version": "2.130.0"
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_elasticloadbalancingv2.ApplicationListenerRule",
+                          "version": "2.130.0"
+                        }
+                      },
                       "TargetGroup": {
                         "id": "TargetGroup",
                         "path": "IntegStack/PrivateS3Hosting/Alb/Listener/TargetGroup",
@@ -1219,6 +1267,80 @@
                 },
                 "constructInfo": {
                   "fqn": "aws-cdk-lib.aws_elasticloadbalancingv2.ApplicationLoadBalancer",
+                  "version": "2.130.0"
+                }
+              },
+              "HostedZone": {
+                "id": "HostedZone",
+                "path": "IntegStack/PrivateS3Hosting/HostedZone",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "IntegStack/PrivateS3Hosting/HostedZone/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::Route53::HostedZone",
+                      "aws:cdk:cloudformation:props": {
+                        "name": "cryer-nao-domain.com."
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_route53.CfnHostedZone",
+                      "version": "2.130.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_route53.HostedZone",
+                  "version": "2.130.0"
+                }
+              },
+              "AliasRecord": {
+                "id": "AliasRecord",
+                "path": "IntegStack/PrivateS3Hosting/AliasRecord",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "IntegStack/PrivateS3Hosting/AliasRecord/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::Route53::RecordSet",
+                      "aws:cdk:cloudformation:props": {
+                        "aliasTarget": {
+                          "hostedZoneId": {
+                            "Fn::GetAtt": [
+                              "PrivateS3HostingAlb021A4BED",
+                              "CanonicalHostedZoneID"
+                            ]
+                          },
+                          "dnsName": {
+                            "Fn::Join": [
+                              "",
+                              [
+                                "dualstack.",
+                                {
+                                  "Fn::GetAtt": [
+                                    "PrivateS3HostingAlb021A4BED",
+                                    "DNSName"
+                                  ]
+                                }
+                              ]
+                            ]
+                          }
+                        },
+                        "hostedZoneId": {
+                          "Ref": "PrivateS3HostingHostedZone3CFF459C"
+                        },
+                        "name": "cryer-nao-domain.com.",
+                        "type": "A"
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_route53.CfnRecordSet",
+                      "version": "2.130.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_route53.ARecord",
                   "version": "2.130.0"
                 }
               }

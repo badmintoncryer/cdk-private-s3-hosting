@@ -18,7 +18,7 @@
         "validateOnSynth": false,
         "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-deploy-role-${AWS::AccountId}-${AWS::Region}",
         "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-cfn-exec-role-${AWS::AccountId}-${AWS::Region}",
-        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/1b248e28b91a4c589fc3acf2c8fbc35d37cb8abd5ffd6e141a4620016d2b449c.json",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/06633ad63d97a535a843beef2bb84369334eb1d68be23ef94fd36f450dc97383.json",
         "requiresBootstrapStackVersion": 6,
         "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
         "additionalDependencies": [
@@ -238,10 +238,28 @@
             "data": "PrivateS3HostingAlbListenerA1E8A46E"
           }
         ],
+        "/IntegStack/PrivateS3Hosting/Alb/Listener/RedirectRule/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PrivateS3HostingAlbListenerRedirectRuleF008D581"
+          }
+        ],
         "/IntegStack/PrivateS3Hosting/Alb/Listener/TargetGroup/Resource": [
           {
             "type": "aws:cdk:logicalId",
             "data": "PrivateS3HostingAlbListenerTargetGroup38693E12"
+          }
+        ],
+        "/IntegStack/PrivateS3Hosting/HostedZone/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PrivateS3HostingHostedZone3CFF459C"
+          }
+        ],
+        "/IntegStack/PrivateS3Hosting/AliasRecord/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PrivateS3HostingAliasRecord8AC38807"
           }
         ],
         "/IntegStack/Custom::VpcRestrictDefaultSGCustomResourceProvider/Role": [

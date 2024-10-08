@@ -802,6 +802,36 @@
     "Protocol": "HTTP"
    }
   },
+  "PrivateS3HostingAlbListenerRedirectRuleF008D581": {
+   "Type": "AWS::ElasticLoadBalancingV2::ListenerRule",
+   "Properties": {
+    "Actions": [
+     {
+      "RedirectConfig": {
+       "Path": "/#{path}index.html",
+       "Port": "80",
+       "Protocol": "HTTP",
+       "StatusCode": "HTTP_302"
+      },
+      "Type": "redirect"
+     }
+    ],
+    "Conditions": [
+     {
+      "Field": "path-pattern",
+      "PathPatternConfig": {
+       "Values": [
+        "*/"
+       ]
+      }
+     }
+    ],
+    "ListenerArn": {
+     "Ref": "PrivateS3HostingAlbListenerA1E8A46E"
+    },
+    "Priority": 1
+   }
+  },
   "PrivateS3HostingAlbListenerTargetGroup38693E12": {
    "Type": "AWS::ElasticLoadBalancingV2::TargetGroup",
    "Properties": {
@@ -835,6 +865,44 @@
     "VpcId": {
      "Ref": "PrivateS3HostingVpcEED45DD1"
     }
+   }
+  },
+  "PrivateS3HostingHostedZone3CFF459C": {
+   "Type": "AWS::Route53::HostedZone",
+   "Properties": {
+    "Name": "cryer-nao-domain.com."
+   }
+  },
+  "PrivateS3HostingAliasRecord8AC38807": {
+   "Type": "AWS::Route53::RecordSet",
+   "Properties": {
+    "AliasTarget": {
+     "DNSName": {
+      "Fn::Join": [
+       "",
+       [
+        "dualstack.",
+        {
+         "Fn::GetAtt": [
+          "PrivateS3HostingAlb021A4BED",
+          "DNSName"
+         ]
+        }
+       ]
+      ]
+     },
+     "HostedZoneId": {
+      "Fn::GetAtt": [
+       "PrivateS3HostingAlb021A4BED",
+       "CanonicalHostedZoneID"
+      ]
+     }
+    },
+    "HostedZoneId": {
+     "Ref": "PrivateS3HostingHostedZone3CFF459C"
+    },
+    "Name": "cryer-nao-domain.com.",
+    "Type": "A"
    }
   },
   "CustomVpcRestrictDefaultSGCustomResourceProviderRole26592FE0": {
