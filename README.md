@@ -87,6 +87,22 @@ After deploying the stack, you can access the website using the `domainName` you
 
 **Note**: All access to the path pattern `*/` will be redirected to `/index.html`. Therefore, it will function correctly even when the path is set on the frontend and the page is reloaded.
 
+## Setup DNS
+
+This construct creates Route53 hosted zone and an A record for the domain name you specified by default.
+
+If you want to use your own DNS settings(e.g. using a corporate DNS server),
+you can disable the Route53 hosted zone creation by setting the `enablePrivateDns` property to `false`.
+
+```typescript
+import { PrivateS3Hosting } from 'cdk-private-s3-hosting';
+
+const privateS3Hosting = new PrivateS3Hosting(this, 'PrivateS3Hosting', {
+  domainName: 'cryer-nao-domain.com',
+  enablePrivateDns: false,
+});
+```
+
 ## TLS Certificate
 
 If you want to use HTTPS, you need to create a TLS certificate in ACM and pass it to the `certificate` property.
