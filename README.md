@@ -86,3 +86,21 @@ After deploying the stack, you can access the website using the `domainName` you
 ```
 
 **Note**: All access to the path pattern `*/` will be redirected to `/index.html`. Therefore, it will function correctly even when the path is set on the frontend and the page is reloaded.
+
+## TLS Certificate
+
+If you want to use HTTPS, you need to create a TLS certificate in ACM and pass it to the `certificate` property.
+
+```typescript
+import * as acm from 'aws-cdk-lib/aws-certificatemanager';
+import { PrivateS3Hosting } from 'cdk-private-s3-hosting';
+
+declare const certificate: acm.ICertificate;
+
+const privateS3Hosting = new PrivateS3Hosting(this, 'PrivateS3Hosting', {
+  domainName: 'cryer-nao-domain.com',
+  certificate,
+});
+```
+
+Of course, specified domain name (`domainName` and `subDomain`) must be the same as the domain name of the certificate.
