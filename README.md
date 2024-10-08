@@ -87,6 +87,8 @@ After deploying the stack, you can access the website using the `domainName` you
 
 **Note**: All access to the path pattern `*/` will be redirected to `/index.html`. Therefore, it will function correctly even when the path is set on the frontend and the page is reloaded.
 
+**Note**: I also recommend to use [deploy-time-build](https://github.com/tmokmss/deploy-time-build) to build the frontend assets while deploying the stack.
+
 ## Setup DNS
 
 This construct creates Route53 hosted zone and an A record for the domain name you specified by default.
