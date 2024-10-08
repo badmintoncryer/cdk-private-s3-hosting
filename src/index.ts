@@ -3,14 +3,15 @@ import * as ec2 from 'aws-cdk-lib/aws-ec2';
 import * as elbv2 from 'aws-cdk-lib/aws-elasticloadbalancingv2';
 import * as targets from 'aws-cdk-lib/aws-elasticloadbalancingv2-targets';
 import * as iam from 'aws-cdk-lib/aws-iam';
+import * as route53 from 'aws-cdk-lib/aws-route53';
 import * as s3 from 'aws-cdk-lib/aws-s3';
 import { Construct } from 'constructs';
+import { InterfaceVpcEndpointWithPrivateIp } from './constructs/interface-vpc-endpoint-with-private-ip';
 
 export interface PrivateS3HostingProps {
   readonly domainName: string;
   readonly certificate?: acm.ICertificate;
   readonly enablePrivateDns?: boolean;
-  readonly s3InterfaceEndpoint?: ec2.IInterfaceVpcEndpoint;
   readonly bucketProps?: s3.BucketProps;
   readonly internetFacing?: boolean;
   readonly vpc?: ec2.IVpc;
@@ -19,20 +20,19 @@ export interface PrivateS3HostingProps {
 export class PrivateS3Hosting extends Construct {
   public readonly bucket: s3.Bucket;
   public readonly alb: elbv2.ApplicationLoadBalancer;
+  public readonly vpc: ec2.IVpc;
   constructor(scope: Construct, id: string, props?: PrivateS3HostingProps) {
     super(scope, id);
 
-    const vpc = props?.vpc ?? new ec2.Vpc(this, 'Vpc', {
+    this.vpc = props?.vpc ?? new ec2.Vpc(this, 'Vpc', {
       maxAzs: 2,
       natGateways: 0,
     });
 
-    const vpcEndpoint = props?.s3InterfaceEndpoint ?? new ec2.InterfaceVpcEndpoint(this, 'S3Endpoint', {
+    const vpcEndpoint = new InterfaceVpcEndpointWithPrivateIp(this, 'S3Endpoint', {
       service: ec2.InterfaceVpcEndpointAwsService.S3,
-      vpc,
+      vpc: this.vpc,
     });
-
-    const vpcEndpointIps = ['192.168.1.24'];
 
     const bucket = new s3.Bucket(this, 'Bucket', {
       ...props?.bucketProps,
@@ -40,7 +40,7 @@ export class PrivateS3Hosting extends Construct {
     });
     bucket.addToResourcePolicy(new iam.PolicyStatement({
       actions: ['s3:GetObject'],
-      resources: [bucket.bucketArn + '/*'],
+      resources: [bucket.bucketArn, bucket.arnForObjects('*')],
       principals: [new iam.AnyPrincipal()],
       conditions: {
         StringEquals: {
@@ -50,7 +50,7 @@ export class PrivateS3Hosting extends Construct {
     }));
 
     const alb = new elbv2.ApplicationLoadBalancer(this, 'Alb', {
-      vpc,
+      vpc: this.vpc,
       internetFacing: props?.internetFacing ?? false,
     });
 
@@ -63,7 +63,18 @@ export class PrivateS3Hosting extends Construct {
 
     listener.addTargets('Target', {
       port: 443,
-      targets: vpcEndpointIps.map((ip) => new targets.IpTarget(ip)),
+      targets: vpcEndpoint.vpcEndpointPrivateIps.map((ip) => new targets.IpTarget(ip)),
     });
+
+    if (props?.enablePrivateDns) {
+      const hostedzone = new route53.HostedZone(this, 'HostedZone', {
+        zoneName: props.domainName,
+      });
+      new route53.CnameRecord(this, 'CnameRecord', {
+        zone: hostedzone,
+        recordName: props.domainName,
+        domainName: alb.loadBalancerDnsName,
+      });
+    };
   }
 }
