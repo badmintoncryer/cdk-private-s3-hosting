@@ -9,20 +9,79 @@ import * as s3 from 'aws-cdk-lib/aws-s3';
 import { Construct } from 'constructs';
 import { InterfaceVpcEndpointWithPrivateIp } from './constructs/interface-vpc-endpoint-with-private-ip';
 
+/**
+ * Properties for PrivateS3Hosting
+ */
 export interface PrivateS3HostingProps {
+  /**
+   * The domain name for the website
+   *
+   * This will be used to create the S3 bucket and the ALB listener
+   */
   readonly domainName: string;
+
+  /**
+   * The certificate for the website
+   *
+   * @default - use HTTP
+   */
   readonly certificate?: acm.ICertificate;
+
+  /**
+   * Enable private DNS for the website
+   *
+   * By eneabling this, a private hosted zone will be created for the domain name
+   * and an alias record will be created for the ALB
+   *
+   * You can access to the alb by the `http(s)://<domainName>` from the VPC
+   *
+   * @default true
+   */
   readonly enablePrivateDns?: boolean;
+
+  /**
+   * The properties for the S3 bucket
+   *
+   * @default - use default properties
+   */
   readonly bucketProps?: s3.BucketProps;
+
+  /**
+   * Whether the ALB is internet facing
+   *
+   * @default false
+   */
   readonly internetFacing?: boolean;
+
+  /**
+   * The VPC for the website
+   *
+   * @default - create a new VPC with 2 AZs and 0 NAT gateways
+   */
   readonly vpc?: ec2.IVpc;
 }
 
+/**
+ * A construct to host a private S3 website
+ */
 export class PrivateS3Hosting extends Construct {
+
+  /**
+   * The S3 bucket for hosting the website
+   */
   public readonly bucket: s3.Bucket;
+
+  /**
+   * The ALB to access the website
+   */
   public readonly alb: elbv2.ApplicationLoadBalancer;
+
+  /**
+   * The VPC
+   */
   public readonly vpc: ec2.IVpc;
-  constructor(scope: Construct, id: string, props?: PrivateS3HostingProps) {
+
+  constructor(scope: Construct, id: string, props: PrivateS3HostingProps) {
     super(scope, id);
 
     this.vpc = props?.vpc ?? new ec2.Vpc(this, 'Vpc', {
@@ -83,7 +142,7 @@ export class PrivateS3Hosting extends Construct {
       },
     });
 
-    if (props?.enablePrivateDns) {
+    if (props?.enablePrivateDns ?? true) {
       const hostedzone = new route53.PrivateHostedZone(this, 'HostedZone', {
         zoneName: props.domainName,
         vpc: this.vpc,

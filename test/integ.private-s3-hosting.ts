@@ -4,7 +4,7 @@ import * as ec2 from 'aws-cdk-lib/aws-ec2';
 import { PrivateS3Hosting } from '../src';
 
 const app = new App();
-const stack = new Stack(app, 'IntegStack');
+const stack = new Stack(app, 'IntegTestStack');
 
 const privateS3Hosting = new PrivateS3Hosting(stack, 'PrivateS3Hosting', {
   domainName: 'cryer-nao-domain.com',
