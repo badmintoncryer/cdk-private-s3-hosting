@@ -4,7 +4,7 @@ This is a CDK construct that creates a private S3 bucket and an Application Load
 
 You can use this construct for a enterprise use case where you want to host a static website in a private network.
 
-Original idea is from [this blog post](https://aws.amazon.com/jp/blogs/networking-and-content-delivery/hosting-internal-https-static-websites-with-alb-s3-and-privatelink/).
+Original idea is from [this blog post](https://aws.amazon.com/jp/blogs/networking-and-content-delivery/hosting-internal-https-static-websites-with-alb-s3-and-privatelink/). And some implementations are referenced from [this post](https://qiita.com/k_bobchin/items/c016cc65912a905b90ef).
 
 [![View on Construct Hub](https://constructs.dev/badge?package=cdk-private-s3-hosting)](https://constructs.dev/packages/cdk-private-s3-hosting)
 [![Open in Visual Studio Code](https://img.shields.io/static/v1?logo=visualstudiocode&label=&message=Open%20in%20Visual%20Studio%20Code&labelColor=2c2c32&color=007acc&logoColor=007acc)](https://open.vscode.dev/badmintoncryer/cdk-private-s3-hosting)
