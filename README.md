@@ -59,6 +59,27 @@ const privateS3Hosting = new PrivateS3Hosting(this, 'PrivateS3Hosting', {
 });
 ```
 
+### Specify the sub domain
+
+You can specify the sub domain by setting the `subDomain` property.
+
+```typescript
+const privateS3Hosting = new PrivateS3Hosting(this, 'PrivateS3Hosting', {
+  domainName: 'cryer-nao-domain.com',
+  subDomain: 'sub',
+});
+```
+
+In this case, the S3 bucket name will be created with `${subDomain}.${domainName}`.
+
+If `enablePrivateDns` is enabled, a private hosted zone will also be created for the `domainName` and an A record will be created from `${subDomain}.${domainName}` to the ALB DNS name.
+
+You can retrieve `hoge.txt` on the root of the S3 bucket using the following command:
+
+```sh
+curl http://sub.cryer-nao-domain.com/hoge.txt
+```
+
 ### Deploy the frontend assets
 
 You can deploy the frontend assets to the S3 bucket like below:
@@ -101,7 +122,7 @@ After deploying the stack, you can access the website using the `domainName` you
 
 **Note**: I also recommend to use [deploy-time-build](https://github.com/tmokmss/deploy-time-build) to build the frontend assets while deploying the stack.
 
-## Setup DNS
+### Setup DNS
 
 This construct creates Route53 hosted zone and an A record for the domain name you specified by default.
 
@@ -117,7 +138,7 @@ const privateS3Hosting = new PrivateS3Hosting(this, 'PrivateS3Hosting', {
 });
 ```
 
-## TLS Certificate
+### TLS Certificate
 
 If you want to use HTTPS, you need to create a TLS certificate in ACM and pass it to the `certificate` property.
 
