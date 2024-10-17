@@ -60,8 +60,7 @@ const privateS3Hosting = new PrivateS3Hosting(this, 'PrivateS3Hosting', {
 
 new s3deploy.BucketDeployment(this, 'DeployWebsite', {
   sources: [s3deploy.Source.asset('./website-dist')],
-  destinationBucket: websiteBucket,
-  bucket: privateS3Hosting.bucket,
+  destinationBucket:  privateS3Hosting.bucket,
 });
 ```
 
