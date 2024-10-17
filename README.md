@@ -40,10 +40,23 @@ const privateS3Hosting = new PrivateS3Hosting(this, 'PrivateS3Hosting', {
 
 After you deploy the stack, you can access the S3 bucket using the ALB's DNS name from the VPC where the stack is deployed.
 
-For example, if you put the `hoge.txt` file in the S3 bucket, you can access it using the following command:
+For example, if you put the `hoge.txt` file in the root of S3 bucket, you can access it using the following command:
 
 ```sh
 curl http://cryer-nao-domain.com/hoge.txt
+```
+
+### Use existing VPC
+
+You can use an existing VPC by specifying the `vpc` property.
+
+```typescript
+declare const vpc: ec2.IVpc;
+
+const privateS3Hosting = new PrivateS3Hosting(this, 'PrivateS3Hosting', {
+  domainName: 'cryer-nao-domain.com',
+  vpc,
+});
 ```
 
 ### Deploy the frontend assets
