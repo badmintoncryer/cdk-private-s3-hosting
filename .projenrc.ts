@@ -18,9 +18,12 @@ const project = new awscdk.AwsCdkConstructLibrary({
   ],
   releaseToNpm: true,
   packageName: 'cdk-private-s3-hosting',
+  npmTrustedPublishing: true,
+  workflowNodeVersion: '24',
   publishToPypi: {
     distName: 'cdk-private-s3-hosting',
     module: 'cdk-private-s3-hosting',
+    trustedPublishing: true,
   },
 });
 
